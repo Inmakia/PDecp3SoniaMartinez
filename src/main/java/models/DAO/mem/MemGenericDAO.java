@@ -1,7 +1,6 @@
 package models.DAO.mem;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,11 +36,12 @@ public abstract class MemGenericDAO<ID, T> implements GenericDAO<ID, T> {
     }
 
     public ArrayList<T> findAll() {
-        return (ArrayList<T>) this.database.values();
+        return new ArrayList<T>(this.database.values());
     }
 
     public ArrayList<T> findAll(int index, int size) {
-        return null;
+        assert index + size + 1 <= this.database.size();
+        return new ArrayList<T>(new ArrayList<T>(this.database.values()).subList(index, index + size));
     }
 
     protected abstract ID getID(T entity);
